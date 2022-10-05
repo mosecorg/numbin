@@ -12,7 +12,6 @@ requires-python = ">=3.7"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 keywords = ["machine learning", "deep learning", "serialization"]
-dynamic = ["version"]
 classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
@@ -36,5 +35,12 @@ changelog = "https://github.com/mosecorg/numbin/releases"
 
 [build-system]
 requires = ["setuptools>=45", "wheel"]
+
+[project.optional-dependencies]
+dev = [
+    "black>=22.8",
+    "isort>=5.10",
+    "autoflake>=1.6.1",
+]
 
 [tool]
