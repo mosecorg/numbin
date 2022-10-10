@@ -1,5 +1,7 @@
-PY_SOURCE_FILES=numbin
+PY_SOURCE_FILES=numbin test
 PROJECT=numbin
+
+.PHONY: test doc
 
 build: clean
 	@python -m build
@@ -20,3 +22,6 @@ format:
 	@autoflake --in-place --recursive ${PY_SOURCE_FILES}
 	@isort --project=${PROJECT} ${PY_SOURCE_FILES}
 	@black ${PY_SOURCE_FILES}
+
+test:
+	@pytest test -vv -s
