@@ -41,6 +41,7 @@ dev = [
     "black>=22.8",
     "isort>=5.10",
     "autoflake>=1.6.1",
+    "pytest>=7.1",
 ]
 
 [tool]
