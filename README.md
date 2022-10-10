@@ -16,3 +16,30 @@
 </p>
 
 An efficient binary serialization format for numerical data.
+
+## Install
+
+```sh
+pip install numbin
+```
+
+## Usage
+
+```python
+from numbin import NumBin
+import numpy as np
+
+nb = NumBin()
+arr = np.random.rand(5, 3)
+
+# in memory
+binary = nb.dumps(arr)
+print(nb.loads(binary))
+
+# file
+with open("num.bin", "wb") as f:
+    nb.dump(arr, f)
+
+with open("num.bin", "rb") as f:
+    print(nb.load(f))
+```
