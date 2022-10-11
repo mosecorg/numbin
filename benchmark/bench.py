@@ -10,7 +10,7 @@ from numbin import NumBin
 nb = NumBin()
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class Data:
     arr: np.ndarray
     msg: str
