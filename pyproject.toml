@@ -43,5 +43,6 @@ dev = [
     "autoflake>=1.6.1",
     "pytest>=7.1",
 ]
+msgpack = ["msgpack>=1.0.4"]
 
 [tool]

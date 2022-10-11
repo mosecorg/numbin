@@ -24,4 +24,5 @@ format:
 	@black ${PY_SOURCE_FILES}
 
 test:
+	@pip install -e .[msgpack]
 	@pytest test -vv -s
