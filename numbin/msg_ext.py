@@ -26,6 +26,8 @@ class NumBinMessage(NumBin):
     """Binary serialization as an extension of MsgPack.
 
     It supports msgpack built-in type and NumPy ndarray.
+
+    This requires extra dependencies: `pip install numbin[msgpack]`
     """
 
     def __init__(self) -> None:
