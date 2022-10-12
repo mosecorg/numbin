@@ -59,8 +59,7 @@ class NumBin:
         data.extend(struct.pack(f"{BYTE_ORDER}{DIM_FORMAT}", len(shape)))
         for size in shape:
             data.extend(struct.pack(f"{BYTE_ORDER}{SHAPE_FORMAT}", size))
-        data.extend(binary)
-        return bytes(data)
+        return bytes(data) + binary
 
     def loads(self, binary) -> np.ndarray:
         """Deserialize binary to NumPy array."""

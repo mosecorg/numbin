@@ -43,11 +43,11 @@ def numpy_save_load(data: Data):
 
 
 def time_record(func, args=(), round=5):
-    res = []
-    for _ in range(round):
+    res = [0] * round
+    for i in range(round):
         t0 = perf_counter()
         func(*args)
-        res.append(perf_counter() - t0)
+        res[i] = perf_counter() - t0
     return res
 
 
