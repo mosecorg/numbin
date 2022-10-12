@@ -1,7 +1,7 @@
 import pickle
-from time import perf_counter
 from dataclasses import dataclass
 from io import BytesIO
+from time import perf_counter
 
 import numpy as np
 
