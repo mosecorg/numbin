@@ -14,7 +14,7 @@ nb = NumBin()
 class Data:
     arr: np.ndarray
     msg: str
-    epoch: int = 10
+    epoch: int
 
 
 def generate_data():
@@ -22,8 +22,8 @@ def generate_data():
         Data(np.random.rand(1), "scalar", 10000),
         Data(np.random.rand(1024), "vector", 10000),
         Data(np.random.rand(64, 1024), "matrix", 1000),
-        Data(np.random.randint(0, 255, (3, 1024, 1024)), "image", 100),
-        Data(np.random.randint(0, 255, (64, 3, 1024, 1024)), "batch of images", 5),
+        Data(np.random.rand(3, 1024, 1024), "image", 100),
+        Data(np.random.rand(64, 3, 1024, 1024), "batch of images", 5),
     )
 
 
