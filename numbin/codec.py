@@ -1,5 +1,5 @@
 import struct
-from io import TextIOWrapper
+from io import BytesIO, TextIOWrapper
 
 import numpy as np
 
@@ -23,7 +23,7 @@ NP_TYPE = [
 ]
 TYPE_TO_INDEX = dict((t, i) for (i, t) in enumerate(NP_TYPE, start=1))
 INDEX_TO_TYPE = dict((i, t) for (i, t) in enumerate(NP_TYPE, start=1))
-BYTE_ORDER = ">"
+BYTE_ORDER = "<"
 DIM_FORMAT = "H"
 SHAPE_FORMAT = "H"
 INDEX_FORMAT = "H"
@@ -54,22 +54,24 @@ class NumBin:
         shape = array.shape
         index = TYPE_TO_INDEX[array.dtype]
         binary = array.tobytes()
-        data = bytearray()
-        data.extend(struct.pack(f"{BYTE_ORDER}{INDEX_FORMAT}", index))
-        data.extend(struct.pack(f"{BYTE_ORDER}{DIM_FORMAT}", len(shape)))
+        data = BytesIO()
+        data.write(struct.pack(f"{BYTE_ORDER}{INDEX_FORMAT}", index))
+        data.write(struct.pack(f"{BYTE_ORDER}{DIM_FORMAT}", len(shape)))
         for size in shape:
-            data.extend(struct.pack(f"{BYTE_ORDER}{SHAPE_FORMAT}", size))
-        return bytes(data) + binary
+            data.write(struct.pack(f"{BYTE_ORDER}{SHAPE_FORMAT}", size))
+        data.write(binary)
+        return data.getvalue()
 
     def loads(self, binary) -> np.ndarray:
         """Deserialize binary to NumPy array."""
         left, right = 0, INDEX_DIM_SIZE
+        view = memoryview(binary)
         index, dim = struct.unpack(
-            f"{BYTE_ORDER}{INDEX_FORMAT}{DIM_FORMAT}", binary[left:right]
+            f"{BYTE_ORDER}{INDEX_FORMAT}{DIM_FORMAT}", view[left:right]
         )
         left += right
         right += dim * SHAPE_SIZE
-        shape = struct.unpack(f"{BYTE_ORDER}{dim * SHAPE_FORMAT}", binary[left:right])
-        array = np.frombuffer(binary[right:], dtype=INDEX_TO_TYPE[index])
+        shape = struct.unpack(f"{BYTE_ORDER}{dim * SHAPE_FORMAT}", view[left:right])
+        array = np.frombuffer(view[right:], dtype=INDEX_TO_TYPE[index])
         array.resize(shape)
         return array
