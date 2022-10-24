@@ -28,7 +28,7 @@ def generate_data():
 
 
 def pickle_serde(data: Data):
-    pickle.loads(pickle.dumps(data.arr))
+    pickle.loads(pickle.dumps(data.arr, fix_imports=False), fix_imports=False)
 
 
 def numbin_serde(data: Data):
