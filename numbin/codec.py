@@ -1,5 +1,5 @@
 import struct
-from io import TextIOWrapper, BytesIO
+from io import BytesIO, TextIOWrapper
 
 import numpy as np
 
