@@ -138,3 +138,6 @@ target/
 # IDE
 .vscode/*
 .idea/*
+
+# binary
+*.bin

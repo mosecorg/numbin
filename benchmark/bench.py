@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import gc
 import pickle
 import traceback
@@ -6,6 +8,8 @@ from io import BytesIO
 from time import perf_counter
 
 import numpy as np
+from safetensors.numpy import load as st_load
+from safetensors.numpy import save as st_save
 
 from numbin import NumBin
 from numbin.msg_ext import NumBinMessage
@@ -58,6 +62,10 @@ def pickle_serde(data: Data):
     )
 
 
+def safets_serde(data: Data):
+    st_load(st_save({"": data.arr}))[""]
+
+
 def numbin_serde(data: Data):
     nb.loads(nb.dumps(data.arr))
 
@@ -66,7 +74,7 @@ def nbmsg_serde(data: Data):
     nbm.loads(nbm.dumps(data.arr))
 
 
-def numpy_save_load(data: Data):
+def numpy_serde(data: Data):
     fp = BytesIO()
     np.save(fp, data.arr, allow_pickle=False, fix_imports=False)
     fp.seek(0)
@@ -109,7 +117,7 @@ def benchmark():
     print(">>> benchmark for numpy array")
     for data in generate_np_data():
         print("=" * 120)
-        for func in [pickle_serde, numbin_serde, numpy_save_load]:
+        for func in [pickle_serde, numbin_serde, numpy_serde, safets_serde]:
             display_result(func, data)
 
     print(">>> benchmark for normal data mixed with numpy array")
