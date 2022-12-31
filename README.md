@@ -42,6 +42,22 @@ with open("num.bin", "wb") as f:
 
 with open("num.bin", "rb") as f:
     print(nb.load(f))
+
+# work with other type of data
+from numbin.msg_ext import NumBinMessage
+nbm = NumBinMessage()
+data = {"tensor": arr, "labels": ["dog", "cat"], "safe": True}
+
+# in memory
+binary = nbm.dumps(data)
+print(nbm.loads(binary))
+
+# file
+with open("data.bin", "wb") as f:
+    nbm.dump(data, f)
+
+with open("data.bin", "rb") as f:
+    print(nbm.load(f))
 ```
 
 ## Benchmark

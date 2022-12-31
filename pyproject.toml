@@ -35,6 +35,7 @@ changelog = "https://github.com/mosecorg/numbin/releases"
 
 [build-system]
 requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 dev = [

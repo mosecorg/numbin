@@ -12,7 +12,7 @@ clean:
 	@-find . -name '__pycache__' -exec rm -rf {} +
 
 dev:
-	@pip install -e .[dev]
+	@pip install --use-feature=in-tree-build -q .[dev]
 
 lint:
 	@black --check --diff ${PY_SOURCE_FILES}
@@ -23,6 +23,11 @@ format:
 	@isort --project=${PROJECT} ${PY_SOURCE_FILES}
 	@black ${PY_SOURCE_FILES}
 
-test:
-	@pip install -e .[msgpack]
+install:
+	@pip install --use-feature=in-tree-build -q .[msgpack]
+
+test: install
 	@pytest test -vv -s
+
+bench: install
+	@python benchmark/bench.py
