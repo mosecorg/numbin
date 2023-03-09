@@ -1,5 +1,6 @@
 import struct
-from io import BytesIO, TextIOWrapper
+from io import BytesIO
+from typing import IO
 
 import numpy as np
 
@@ -40,10 +41,10 @@ class NumBin:
     def __init__(self) -> None:
         pass
 
-    def dump(self, array: np.ndarray, fp: TextIOWrapper):
+    def dump(self, array: np.ndarray, fp: IO[bytes]):
         fp.write(self.dumps(array))
 
-    def load(self, fp: TextIOWrapper) -> np.ndarray:
+    def load(self, fp: IO[bytes]) -> np.ndarray:
         return self.loads(fp.read())
 
     def dumps(self, array: np.ndarray) -> bytes:
@@ -75,3 +76,11 @@ class NumBin:
         array = np.frombuffer(view[right:], dtype=INDEX_TO_TYPE[index])
         array.resize(shape)
         return array
+
+
+# alias
+_nb = NumBin()
+loads = _nb.loads
+load = _nb.load
+dumps = _nb.dumps
+dump = _nb.dump
