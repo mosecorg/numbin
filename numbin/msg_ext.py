@@ -1,5 +1,4 @@
-from io import TextIOWrapper
-from typing import Any
+from typing import IO, Any
 
 import msgpack
 import numpy as np
@@ -33,10 +32,10 @@ class NumBinMessage(NumBin):
     def __init__(self) -> None:
         super().__init__()
 
-    def dump(self, obj, fp: TextIOWrapper):
+    def dump(self, obj, fp: IO[bytes]):
         return super().dump(obj, fp)
 
-    def load(self, fp: TextIOWrapper) -> Any:
+    def load(self, fp: IO[bytes]) -> Any:
         return super().load(fp)
 
     def dumps(self, obj: Any) -> bytes:
@@ -44,3 +43,11 @@ class NumBinMessage(NumBin):
 
     def loads(self, bytes):
         return msgpack.unpackb(bytes, ext_hook=ext_hook, use_list=False)
+
+
+# alias
+_nbm = NumBinMessage()
+loads = _nbm.loads
+load = _nbm.load
+dumps = _nbm.dumps
+dump = _nbm.dump

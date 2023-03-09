@@ -1,6 +1,6 @@
 [project]
 name = "numbin"
-version = "0.3.0"
+version = "0.4.0"
 description = "an efficient binary serialization format for numerical data"
 authors = [
     {name = "Keming", email = "kemingy94@gmail.com"},

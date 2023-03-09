@@ -25,11 +25,13 @@ pip install numbin
 
 ## Usage
 
+Work with pure NumPy data:
+
 ```python
-from numbin import NumBin
+import numbin as nb
 import numpy as np
 
-nb = NumBin()
+
 arr = np.random.rand(5, 3)
 
 # in memory
@@ -42,9 +44,14 @@ with open("num.bin", "wb") as f:
 
 with open("num.bin", "rb") as f:
     print(nb.load(f))
+```
 
-# work with other type of data
+Work with complex data:
+
+```python
 from numbin.msg_ext import NumBinMessage
+
+
 nbm = NumBinMessage()
 data = {"tensor": arr, "labels": ["dog", "cat"], "safe": True}
 
