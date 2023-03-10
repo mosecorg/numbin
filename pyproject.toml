@@ -1,6 +1,6 @@
 [project]
 name = "numbin"
-version = "0.4.0"
+version = "0.4.1"
 description = "an efficient binary serialization format for numerical data"
 authors = [
     {name = "Keming", email = "kemingy94@gmail.com"},
@@ -34,7 +34,7 @@ repository = "https://github.com/mosecorg/numbin"
 changelog = "https://github.com/mosecorg/numbin/releases"
 
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
@@ -47,3 +47,6 @@ dev = [
 msgpack = ["msgpack>=1.0.4"]
 
 [tool]
+
+[tool.setuptools.package-data]
+numbin = ["py.typed"]
