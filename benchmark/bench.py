@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from io import BytesIO
 from time import perf_counter
 
+import msgpack
+import msgpack_numpy
 import numpy as np
 from safetensors.numpy import load as st_load
 from safetensors.numpy import save as st_save
@@ -81,6 +83,13 @@ def numpy_serde(data: Data):
     np.load(fp, allow_pickle=False, fix_imports=False)
 
 
+def msg_np_serde(data: Data):
+    msgpack.unpackb(
+        msgpack.packb(data.arr, default=msgpack_numpy.encode),
+        object_hook=msgpack_numpy.decode,
+    )
+
+
 def time_record(func, data: Data, threshold=1):
     res = []
     total_sec = 0
@@ -117,7 +126,13 @@ def benchmark():
     print(">>> benchmark for numpy array")
     for data in generate_np_data():
         print("=" * 120)
-        for func in [pickle_serde, numbin_serde, numpy_serde, safets_serde]:
+        for func in [
+            pickle_serde,
+            numbin_serde,
+            numpy_serde,
+            safets_serde,
+            msg_np_serde,
+        ]:
             display_result(func, data)
 
     print(">>> benchmark for normal data mixed with numpy array")

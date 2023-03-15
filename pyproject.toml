@@ -45,6 +45,12 @@ dev = [
     "pytest>=7.1",
 ]
 msgpack = ["msgpack>=1.0.4"]
+bench = [
+    "msgpack>=1.0.4",
+    "numpy",
+    "safetensors",
+    "msgpack-numpy",
+]
 
 [tool]
 
