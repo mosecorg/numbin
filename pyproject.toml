@@ -1,6 +1,6 @@
 [project]
 name = "numbin"
-version = "0.4.1"
+version = "0.5.0"
 description = "an efficient binary serialization format for numerical data"
 authors = [
     {name = "Keming", email = "kemingy94@gmail.com"},
@@ -39,9 +39,7 @@ build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
 dev = [
-    "black>=22.8",
-    "isort>=5.10",
-    "autoflake>=1.6.1",
+    "ruff>=0.2.2",
     "pytest>=7.1",
 ]
 msgpack = ["msgpack>=1.0.4"]
@@ -56,3 +54,18 @@ bench = [
 
 [tool.setuptools.package-data]
 numbin = ["py.typed"]
+
+[tool.ruff]
+target-version = "py38"
+[tool.ruff.lint]
+select = ["E", "F", "G", "B", "I", "SIM", "TID", "PL", "RUF", "D"]
+ignore = ["E501", "D203", "D213"]
+[tool.ruff.lint.isort]
+known-first-party = ["numbin"]
+[tool.ruff.lint.pylint]
+max-args = 10
+[tool.ruff.lint.per-file-ignores]
+"test/*" = ["D"]
+"benchmark/*" = ["D"]
+[tool.ruff.lint.pydocstyle]
+convention = "google"

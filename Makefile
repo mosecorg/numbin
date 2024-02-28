@@ -15,13 +15,11 @@ dev:
 	@pip install -q .[dev]
 
 lint:
-	@black --check --diff ${PY_SOURCE_FILES}
-	@isort --check --diff --project=${PROJECT} ${PY_SOURCE_FILES}
+	@ruff check ${PY_SOURCE_FILES}
 
 format:
-	@autoflake --in-place --recursive ${PY_SOURCE_FILES}
-	@isort --project=${PROJECT} ${PY_SOURCE_FILES}
-	@black ${PY_SOURCE_FILES}
+	@ruff check --fix ${PY_SOURCE_FILES}
+	@ruff format ${PY_SOURCE_FILES}
 
 install:
 	@pip install -q .[msgpack]
