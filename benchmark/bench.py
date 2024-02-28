@@ -98,7 +98,7 @@ def time_record(func, data: Data, threshold=1):
             t0 = perf_counter()
             try:
                 func(data)
-            except:
+            except Exception:
                 print(traceback.format_exc())
             finally:
                 res.append(perf_counter() - t0)

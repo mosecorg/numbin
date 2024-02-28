@@ -1,3 +1,5 @@
+"""Serde for NumPy ndarray."""
+
 import struct
 from io import BytesIO
 from typing import IO
@@ -5,22 +7,22 @@ from typing import IO
 import numpy as np
 
 NP_TYPE = [
-    np.dtype("bool"),
-    np.dtype("int8"),
-    np.dtype("int16"),
-    np.dtype("int32"),
-    np.dtype("int64"),
-    np.dtype("uint8"),
-    np.dtype("uint16"),
-    np.dtype("uint32"),
-    np.dtype("uint64"),
-    np.dtype("float16"),
-    np.dtype("float32"),
-    np.dtype("float64"),
-    np.dtype("float128"),
-    np.dtype("complex64"),
-    np.dtype("complex128"),
-    np.dtype("complex256"),
+    "bool",
+    "int8",
+    "int16",
+    "int32",
+    "int64",
+    "uint8",
+    "uint16",
+    "uint32",
+    "uint64",
+    "float16",
+    "float32",
+    "float64",
+    "float128",
+    "complex64",
+    "complex128",
+    "complex256",
 ]
 TYPE_TO_INDEX = dict((t, i) for (i, t) in enumerate(NP_TYPE, start=1))
 INDEX_TO_TYPE = dict((i, t) for (i, t) in enumerate(NP_TYPE, start=1))
@@ -38,13 +40,12 @@ class NumBin:
     It only supports NumPy ndarray type.
     """
 
-    def __init__(self) -> None:
-        pass
-
     def dump(self, array: np.ndarray, fp: IO[bytes]):
+        """Serialize NumPy array to binary and write to the file."""
         fp.write(self.dumps(array))
 
     def load(self, fp: IO[bytes]) -> np.ndarray:
+        """Read binary from the file and deserialize to NumPy array."""
         return self.loads(fp.read())
 
     def dumps(self, array: np.ndarray) -> bytes:
@@ -53,7 +54,7 @@ class NumBin:
         | index_type | dim | shape | data |
         """
         shape = array.shape
-        index = TYPE_TO_INDEX[array.dtype]
+        index = TYPE_TO_INDEX[array.dtype.name]
         binary = array.tobytes()
         data = BytesIO()
         data.write(struct.pack(f"{BYTE_ORDER}{INDEX_FORMAT}", index))

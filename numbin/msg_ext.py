@@ -1,3 +1,5 @@
+"""Extend msgpack to support NumPy ndarray."""
+
 from typing import IO, Any
 
 import msgpack
@@ -10,6 +12,7 @@ _nb = NumBin()
 
 
 def ext_hook(code, data):
+    """Msgapck hook to handle NumPy ndarray."""
     if code == EXT_CODE:
         return _nb.loads(data)
     return msgpack.ExtType(code, data)
@@ -29,20 +32,21 @@ class NumBinMessage(NumBin):
     This requires extra dependencies: `pip install numbin[msgpack]`
     """
 
-    def __init__(self) -> None:
-        super().__init__()
-
     def dump(self, obj, fp: IO[bytes]):
+        """Serialize to binary and write to the file."""
         return super().dump(obj, fp)
 
     def load(self, fp: IO[bytes]) -> Any:
+        """Read binary from the file and deserialize to NumPy array."""
         return super().load(fp)
 
     def dumps(self, obj: Any) -> bytes:
+        """Serialize to binary."""
         return msgpack.packb(obj, default=_encode)
 
-    def loads(self, bytes):
-        return msgpack.unpackb(bytes, ext_hook=ext_hook, use_list=False)
+    def loads(self, buf: bytes):
+        """Deserialize binary data to NumPy array."""
+        return msgpack.unpackb(buf, ext_hook=ext_hook, use_list=False)
 
 
 # alias
