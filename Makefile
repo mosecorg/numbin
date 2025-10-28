@@ -14,7 +14,7 @@ clean:
 	@-find . -name '__pycache__' -exec rm -rf {} +
 
 dev:
-	@uv sync --group dev
+	@uv sync --all-extras --group dev
 
 lint:
 	@uv run -- ruff check ${PY_SOURCE}
@@ -27,7 +27,7 @@ format:
 install:
 	@uv sync --extra msgpack
 
-test: install dev
+test: dev
 	@uv run -- pytest test -vv -s
 
 bench: install
