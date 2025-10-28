@@ -58,7 +58,6 @@ bench = [
 distribution = true
 
 [tool.ruff]
-target-version = "py38"
 [tool.ruff.lint]
 select = ["E", "F", "G", "B", "I", "SIM", "TID", "PL", "RUF", "D"]
 ignore = ["E501", "D203", "D213"]
