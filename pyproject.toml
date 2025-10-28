@@ -1,6 +1,6 @@
 [project]
 name = "numbin"
-version = "0.5.0"
+version = "0.5.1"
 description = "an efficient binary serialization format for numerical data"
 authors = [
     {name = "Keming", email = "kemingy94@gmail.com"},
@@ -8,7 +8,7 @@ authors = [
 dependencies = [
     "numpy>=1.21.1",
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 keywords = ["machine learning", "deep learning", "serialization"]
@@ -17,11 +17,12 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Free Threading",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -34,29 +35,30 @@ repository = "https://github.com/mosecorg/numbin"
 changelog = "https://github.com/mosecorg/numbin/releases"
 
 [build-system]
-requires = ["setuptools>=61", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 [project.optional-dependencies]
+msgpack = ["msgpack>=1.0.4"]
+
+[dependency-groups]
 dev = [
-    "ruff>=0.2.2",
+    "ruff>=0.14.2",
     "pytest>=7.1",
 ]
-msgpack = ["msgpack>=1.0.4"]
 bench = [
     "msgpack>=1.0.4",
-    "numpy",
     "safetensors",
     "msgpack-numpy",
 ]
 
 [tool]
 
-[tool.setuptools.package-data]
-numbin = ["py.typed"]
+[tool.pdm]
+distribution = true
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "F", "G", "B", "I", "SIM", "TID", "PL", "RUF", "D"]
 ignore = ["E501", "D203", "D213"]

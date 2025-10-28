@@ -1,10 +1,12 @@
-PY_SOURCE_FILES=numbin test benchmark
-PROJECT=numbin
+PY_SOURCE=numbin test benchmark
 
 .PHONY: test doc
 
 build: clean
-	@python -m build
+	@uv build
+
+publish: build
+	@uv publish
 
 clean:
 	@-rm -rf build/ dist/ .eggs/ site/ *.egg-info .pytest_cache .mypy_cache
@@ -12,20 +14,21 @@ clean:
 	@-find . -name '__pycache__' -exec rm -rf {} +
 
 dev:
-	@pip install -q .[dev]
+	@uv sync --all-extras --group dev
 
 lint:
-	@ruff check ${PY_SOURCE_FILES}
+	@uv run -- ruff check ${PY_SOURCE}
+	@uv run -- ruff format --check ${PY_SOURCE}
 
 format:
-	@ruff check --fix ${PY_SOURCE_FILES}
-	@ruff format ${PY_SOURCE_FILES}
+	@uv run -- ruff check --fix ${PY_SOURCE}
+	@uv run -- ruff format ${PY_SOURCE}
 
 install:
-	@pip install -q .[msgpack]
+	@uv sync --extra msgpack
 
-test: install
-	@pytest test -vv -s
+test: dev
+	@uv run -- pytest test -vv -s
 
 bench: install
-	@python benchmark/bench.py
+	@uv run benchmark/bench.py
