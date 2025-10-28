@@ -1,5 +1,4 @@
-PY_SOURCE_FILES=numbin test benchmark
-PROJECT=numbin
+PY_SOURCE=numbin test benchmark
 
 .PHONY: test doc
 
